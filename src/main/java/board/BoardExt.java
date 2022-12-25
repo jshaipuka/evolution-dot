@@ -1,8 +1,6 @@
 package board;
 
-import board.Point;
-import items.Energizeable;
-import items.Food;
+import items.Item;
 import items.Grass;
 import items.Robot;
 
@@ -30,7 +28,7 @@ public class BoardExt {
         return new Point(x, y);
     }
 
-    public static Point getLocationOfRobot(Energizeable[][] board){
+    public static Point getLocationOfRobot(Item[][] board){
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] instanceof Robot) {

@@ -1,7 +1,6 @@
 package board;
 
-import board.Point;
-import items.Energizeable;
+import items.Item;
 import items.Food;
 import items.Grass;
 import items.Robot;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 public class Board {
     private final int height;
     private final int width;
-    private Energizeable[][] board;
+    private Item[][] board;
     private Robot robot;
     private Point robotLocation;
 
@@ -20,20 +19,20 @@ public class Board {
         this.height = height;
         this.width = width;
 
-        board = new Energizeable[height][width];
+        board = new Item[height][width];
         Arrays.stream(board).forEach(row -> Arrays.fill(row, new Grass()));
 
         populateWithFood(board);
         placeRobot(board);
     }
 
-    private void populateWithFood(Energizeable[][] board) {
+    private void populateWithFood(Item[][] board) {
         var S = width * height;
         var amountOfFood = S / 5;
         BoardExt.populate(board, new Food(), amountOfFood);
     }
 
-    private void placeRobot(Energizeable[][] board) {
+    private void placeRobot(Item[][] board) {
         robot = new Robot();
         BoardExt.populate(board, robot,1);
         robotLocation = BoardExt.getLocationOfRobot(board);
