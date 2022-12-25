@@ -1,4 +1,4 @@
-package robocode;
+package evolution;
 
 import org.spiderland.Psh.Instruction;
 import org.spiderland.Psh.Interpreter;
@@ -9,7 +9,7 @@ public class RobotInstruction extends Instruction {
     private final Runnable callback;
     private final AtomicInteger counter;
 
-    public RobotInstruction(Runnable callback, AtomicInteger counter) {
+    public RobotInstruction(final Runnable callback, final AtomicInteger counter) {
         this.callback = callback;
         this.counter = counter;
     }

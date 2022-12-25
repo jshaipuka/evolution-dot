@@ -1,15 +1,11 @@
-package robocode;
+package evolution;
 
 import org.spiderland.Psh.Interpreter;
 import java.util.function.Supplier;
 
 
 public class RobotInterpreter extends Interpreter {
-    private final Supplier<Boolean> isAlive;
-
-    public RobotInterpreter(Supplier<Boolean> isAlive) {
-        this.isAlive = isAlive;
-    }
+    private Supplier<Boolean> isAlive;
 
     @Override
     public int Step(int maxSteps) {
@@ -22,5 +18,9 @@ public class RobotInterpreter extends Interpreter {
 
         _totalStepsTaken += executed;
         return executed;
+    }
+
+    public void setIsAlive(Supplier<Boolean> isAlive) {
+        this.isAlive = isAlive;
     }
 }

@@ -1,12 +1,14 @@
 package board;
 
-import items.Item;
 import items.Food;
 import items.Grass;
+import items.Item;
 import items.Robot;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import static java.lang.Math.floorMod;
 
 public class Board {
     private final int height;
@@ -34,7 +36,7 @@ public class Board {
 
     private void placeRobot(Item[][] board) {
         robot = new Robot();
-        BoardExt.populate(board, robot,1);
+        BoardExt.populate(board, robot, 1);
         robotLocation = BoardExt.getLocationOfRobot(board);
     }
 
@@ -64,25 +66,21 @@ public class Board {
         System.out.println(this);
     }
 
-    public boolean isAlive(){
+    public boolean isAlive() {
         return this.robot.getEnergy() > 0;
     }
 
     private Point calculateNextMove(Point location, Direction direction) {
         return switch (direction) {
-            case UP -> moveVertically(location, -1);
-            case DOWN -> moveVertically(location, 1);
-            case LEFT -> moveHorizontally(location, -1);
-            case RIGHT -> moveHorizontally(location, 1);
+            case UP -> calculateNextMove(location, new Point(-1, 0));
+            case DOWN -> calculateNextMove(location, new Point(1, 0));
+            case LEFT -> calculateNextMove(location, new Point(0, -1));
+            case RIGHT -> calculateNextMove(location, new Point(0, 1));
         };
     }
 
-    private Point moveVertically(Point location, int steps) {
-        return new Point(location.x() == 0 ? height + steps : (location.x() - 1) % height, location.y());
-    }
-
-    private Point moveHorizontally(Point location, int steps) {
-        return new Point(location.x(), location.y() == 0 ? width + steps : (location.y() - 1) % width);
+    private Point calculateNextMove(Point location, Point diff) {
+        return new Point(floorMod(location.x() + diff.x(), height), floorMod(location.y() + diff.y(), width));
     }
 
     @Override
@@ -91,7 +89,7 @@ public class Board {
                 .stream(board)
                 .map(row -> Arrays.stream(row)
                         .map(Object::toString)
-                        .collect(Collectors.joining( "" )))
+                        .collect(Collectors.joining("")))
                 .collect(Collectors.joining("\n"));
     }
 }
