@@ -64,6 +64,10 @@ public class Board {
         System.out.println(this);
     }
 
+    public boolean isAlive(){
+        return this.robot.getEnergy() > 0;
+    }
+
     private Point calculateNextMove(Point location, Direction direction) {
         return switch (direction) {
             case UP -> moveVertically(location, -1);
