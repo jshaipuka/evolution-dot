@@ -25,7 +25,7 @@ public class DrawPanel extends JPanel {
         super.paintComponent(g);
         for (int i = 0; i < board.getWidth(); i++) {
             for (int j = 0; j < board.getHeight(); j++) {
-                final Item item = board.item(j, i);
+                final Item item = board.getCells()[j][i];
                 if (item instanceof Food) {
                     g.setColor(Color.BLUE);
                     g.fillRect(i * 100, j * 100, 100, 100);
