@@ -11,13 +11,13 @@ public class RobotInterpreter extends Interpreter {
     @Override
     public int Step(int maxSteps) {
         int executed = 0;
-        while (isAlive.get() && maxSteps != 0 && _execStack.size() > 0) {
-            ExecuteInstruction(_execStack.pop());
+        while (isAlive.get() && maxSteps != 0 && execStack.size() > 0) {
+            executeInstruction(execStack.pop());
             maxSteps--;
             executed++;
         }
 
-        _totalStepsTaken += executed;
+        totalStepsTaken += executed;
         return executed;
     }
 

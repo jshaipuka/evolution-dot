@@ -73,15 +73,15 @@ public class RectanglesDrawingExample extends JFrame {
         }
         final AtomicInteger distance = new AtomicInteger(0);
         final Interpreter interpreter = new Interpreter();
-        interpreter.SetRandomParameters(-10, 10, 1, -10, 10, 0.01f, 40, 100);
+        interpreter.setRandomParameters(-10, 10, 1, -10, 10, 0.01f, 40, 100);
         EventQueue.invokeLater(() -> {
             final RectanglesDrawingExample panel = new RectanglesDrawingExample(board);
             final Thread thread = new Thread(() -> {
                 Stream.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
                         .map(it -> new RobotInstruction("robot.move" + it.name().toLowerCase(), createCallback(board, panel, it), distance))
-                        .forEach(it -> interpreter.AddInstruction(it.getName(), it));
+                        .forEach(it -> interpreter.addInstruction(it.getName(), it));
                 while (true) {
-                    interpreter.Execute(program);
+                    interpreter.execute(program);
                 }
             });
             thread.start();

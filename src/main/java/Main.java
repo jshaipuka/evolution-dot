@@ -4,13 +4,13 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import static org.spiderland.Psh.GA.GAWithParameters;
-import static org.spiderland.Psh.Params.ReadFromFile;
+import static org.spiderland.Psh.GA.gaWithParameters;
+import static org.spiderland.Psh.Params.readFromFile;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        final GA ga = GAWithParameters(ReadFromFile(getFileFromResource("RobotEvolution.pushgp")));
-        ga.Run();
+        final GA ga = gaWithParameters(readFromFile(getFileFromResource("RobotEvolution.pushgp")));
+        ga.run();
     }
 
     private static File getFileFromResource(final String fileName) throws URISyntaxException {
