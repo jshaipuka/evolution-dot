@@ -1,20 +1,20 @@
+import board.Board;
+import board.Direction;
+import items.Food;
+import items.Item;
+import items.Robot;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class RectanglesDrawingExample extends JFrame {
-    private static final int D_W = 1500;
-    private static final int D_H = 200;
-    private static final int CART_WIDTH = 50;
-    private static final int CART_HEIGHT = 50;
 
-    private final int y = 100;
+    private final Board board;
 
-    private final State state;
+    final DrawPanel drawPanel = new DrawPanel();
 
-    DrawPanel drawPanel = new DrawPanel();
-
-    public RectanglesDrawingExample(final State state) {
-        this.state = state;
+    public RectanglesDrawingExample(final Board board) {
+        this.board = board;
         add(drawPanel);
         pack();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -22,35 +22,40 @@ public class RectanglesDrawingExample extends JFrame {
         setVisible(true);
     }
 
-    public void render() {
-        drawPanel.repaint();
-    }
-
     private class DrawPanel extends JPanel {
 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.setColor(Color.BLACK);
-            g.fillRect((int) (state.position * 500) + 750, y, CART_WIDTH, CART_HEIGHT);
-            g.setColor(Color.GRAY);
-            g.fillRect(0, y + CART_HEIGHT, D_W, 10);
+            for (int i = 0; i < board.getHeight(); i++) {
+                for (int j = 0; j < board.getWidth(); j++) {
+                    final Item cell = board.getCells()[i][j];
+                    if (cell instanceof Food) {
+                        g.setColor(Color.BLUE);
+                    } else if (cell instanceof Robot) {
+                        g.setColor(Color.RED);
+                    } else {
+                        g.setColor(Color.GREEN);
+                    }
+                    g.fillRect(j * 100, i * 100, 100, 100);
+                }
+            }
         }
 
         public Dimension getPreferredSize() {
-            return new Dimension(D_W, D_H);
+            return new Dimension(board.getWidth() * 100, board.getHeight() * 100);
         }
     }
 
     public static void main(String[] args) {
-        final State state = new State();
+        final Board board = new Board(7, 15);
         EventQueue.invokeLater(() -> {
-            final RectanglesDrawingExample panel = new RectanglesDrawingExample(state);
+            final RectanglesDrawingExample panel = new RectanglesDrawingExample(board);
             Thread thread = new Thread(() -> {
                 while (true) {
                     panel.repaint();
                     try {
-                        state.position += 0.01;
-                        Thread.sleep(20);
+                        board.move(Direction.RIGHT);
+                        Thread.sleep(500);
                     } catch (Exception ignored) {
 
                     }

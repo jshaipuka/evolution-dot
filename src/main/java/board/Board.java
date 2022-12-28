@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 public class Board {
     private final int height;
     private final int width;
-    private Item[][] board;
+
+    private final Item[][] board;
     private Robot robot;
     private Point robotLocation;
 
@@ -34,7 +35,7 @@ public class Board {
 
     private void placeRobot(Item[][] board) {
         robot = new Robot();
-        BoardExt.populate(board, robot,1);
+        BoardExt.populate(board, robot, 1);
         robotLocation = BoardExt.getLocationOfRobot(board);
     }
 
@@ -64,8 +65,20 @@ public class Board {
         System.out.println(this);
     }
 
-    public boolean isAlive(){
+    public boolean isAlive() {
         return this.robot.getEnergy() > 0;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public Item[][] getCells() {
+        return board;
     }
 
     private Point calculateNextMove(Point location, Direction direction) {
@@ -78,11 +91,11 @@ public class Board {
     }
 
     private Point moveVertically(Point location, int steps) {
-        return new Point(location.x() == 0 ? height + steps : (location.x() - 1) % height, location.y());
+        return new Point(location.x() == 0 ? height + steps : Math.floorMod(location.x() - 1, height), location.y());
     }
 
     private Point moveHorizontally(Point location, int steps) {
-        return new Point(location.x(), location.y() == 0 ? width + steps : (location.y() - 1) % width);
+        return new Point(location.x(), location.y() == 0 ? width + steps : Math.floorMod(location.y() - 1, width));
     }
 
     @Override
@@ -91,7 +104,7 @@ public class Board {
                 .stream(board)
                 .map(row -> Arrays.stream(row)
                         .map(Object::toString)
-                        .collect(Collectors.joining( "" )))
+                        .collect(Collectors.joining("")))
                 .collect(Collectors.joining("\n"));
     }
 }
