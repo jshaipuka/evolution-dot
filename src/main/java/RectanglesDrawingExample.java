@@ -4,8 +4,9 @@ import evolution.RobotInstruction;
 import org.spiderland.Psh.Interpreter;
 import org.spiderland.Psh.Program;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.Component;
+import java.awt.EventQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -34,12 +35,7 @@ public class RectanglesDrawingExample extends JFrame {
 
     public static void main(final String[] args) {
         final Board board = new Board(75, 35);
-        final Program program;
-        try {
-            program = new Program(args[0]);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        final Program program = new Program(args[0]);
         final AtomicInteger distance = new AtomicInteger(0);
         final Interpreter interpreter = new Interpreter();
         interpreter.setRandomParameters(-10, 10, 1, -10, 10, 0.01f, 40, 100);
