@@ -17,9 +17,9 @@ public class Board {
     private Robot robot;
     private Point robotLocation;
 
-    public Board(int height, int width) {
-        this.height = height;
+    public Board(int width, int height) {
         this.width = width;
+        this.height = height;
 
         board = new Item[height][width];
         Arrays.stream(board).forEach(row -> Arrays.fill(row, new Grass()));
@@ -41,9 +41,9 @@ public class Board {
     }
 
     public void move(Direction direction) {
-        System.out.println("Energy BEFORE: " + robot.getEnergy());
+//        System.out.println("Energy BEFORE: " + robot.getEnergy());
         if (robot.getEnergy() == 0) {
-            System.out.println("Run out of energy");
+//            System.out.println("Run out of energy");
             return;
         }
 
@@ -81,6 +81,18 @@ public class Board {
 
     private Point calculateNextMove(Point location, Point diff) {
         return new Point(floorMod(location.x() + diff.x(), height), floorMod(location.y() + diff.y(), width));
+    }
+
+    public Item item(int i, int j) {
+        return board[i][j];
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     @Override
