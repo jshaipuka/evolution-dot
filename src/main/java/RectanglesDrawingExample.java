@@ -32,7 +32,7 @@ public class RectanglesDrawingExample extends JFrame {
                     if (cell instanceof Food) {
                         g.setColor(Color.BLUE);
                     } else if (cell instanceof Robot) {
-                        g.setColor(Color.RED);
+                        g.setColor(board.isAlive() ? Color.RED : Color.BLACK);
                     } else {
                         g.setColor(Color.GREEN);
                     }
@@ -50,12 +50,12 @@ public class RectanglesDrawingExample extends JFrame {
         final Board board = new Board(7, 15);
         EventQueue.invokeLater(() -> {
             final RectanglesDrawingExample panel = new RectanglesDrawingExample(board);
-            Thread thread = new Thread(() -> {
+            final Thread thread = new Thread(() -> {
                 while (true) {
                     panel.repaint();
                     try {
                         board.move(Direction.RIGHT);
-                        Thread.sleep(500);
+                        Thread.sleep(100);
                     } catch (Exception ignored) {
 
                     }
