@@ -1,9 +1,6 @@
 import board.Board;
 import board.Direction;
 import evolution.RobotInstruction;
-import items.Food;
-import items.Item;
-import items.Robot;
 import org.spiderland.Psh.Interpreter;
 import org.spiderland.Psh.Program;
 
@@ -14,41 +11,13 @@ import java.util.stream.Stream;
 
 public class RectanglesDrawingExample extends JFrame {
 
-    private final Board board;
-
-    final DrawPanel drawPanel = new DrawPanel();
-
     public RectanglesDrawingExample(final Board board) {
-        this.board = board;
+        final DrawPanel drawPanel = new DrawPanel(board);
         add(drawPanel);
         pack();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    private class DrawPanel extends JPanel {
-
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            for (int i = 0; i < board.getHeight(); i++) {
-                for (int j = 0; j < board.getWidth(); j++) {
-                    final Item cell = board.getCells()[i][j];
-                    if (cell instanceof Food) {
-                        g.setColor(Color.BLUE);
-                    } else if (cell instanceof Robot) {
-                        g.setColor(board.isAlive() ? Color.RED : Color.BLACK);
-                    } else {
-                        g.setColor(Color.GREEN);
-                    }
-                    g.fillRect(j * 20, i * 20, 20, 20);
-                }
-            }
-        }
-
-        public Dimension getPreferredSize() {
-            return new Dimension(board.getWidth() * 20, board.getHeight() * 20);
-        }
     }
 
     private static Runnable createCallback(final Board board, final Component component, final Direction direction) {
@@ -78,8 +47,8 @@ public class RectanglesDrawingExample extends JFrame {
             final RectanglesDrawingExample panel = new RectanglesDrawingExample(board);
             final Thread thread = new Thread(() -> {
                 Stream.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
-                        .map(it -> new RobotInstruction("robot.move" + it.name().toLowerCase(), createCallback(board, panel, it), distance))
-                        .forEach(it -> interpreter.addInstruction(it.getName(), it));
+                    .map(it -> new RobotInstruction("robot.move" + it.name().toLowerCase(), createCallback(board, panel, it), distance))
+                    .forEach(it -> interpreter.addInstruction(it.getName(), it));
                 while (true) {
                     interpreter.execute(program);
                 }
