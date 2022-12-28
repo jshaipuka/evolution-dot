@@ -10,6 +10,7 @@ import org.spiderland.Psh.Program;
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class RectanglesDrawingExample extends JFrame {
 
@@ -76,15 +77,10 @@ public class RectanglesDrawingExample extends JFrame {
         EventQueue.invokeLater(() -> {
             final RectanglesDrawingExample panel = new RectanglesDrawingExample(board);
             final Thread thread = new Thread(() -> {
+                Stream.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
+                        .map(it -> new RobotInstruction("robot.move" + it.name().toLowerCase(), createCallback(board, panel, it), distance))
+                        .forEach(it -> interpreter.AddInstruction(it.getName(), it));
                 while (true) {
-                    var left = new RobotInstruction(createCallback(board, panel, Direction.LEFT), distance);
-                    var up = new RobotInstruction(createCallback(board, panel, Direction.UP), distance);
-                    var right = new RobotInstruction(createCallback(board, panel, Direction.RIGHT), distance);
-                    var down = new RobotInstruction(createCallback(board, panel, Direction.DOWN), distance);
-                    interpreter.AddInstruction("robot.moveleft", left);
-                    interpreter.AddInstruction("robot.moveup", up);
-                    interpreter.AddInstruction("robot.moveright", right);
-                    interpreter.AddInstruction("robot.movedown", down);
                     interpreter.Execute(program);
                 }
             });

@@ -11,6 +11,7 @@ import org.spiderland.Psh.PushGPIndividual;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class RobotEvolution extends PushGP {
 
@@ -32,14 +33,9 @@ public class RobotEvolution extends PushGP {
 
     @Override
     protected void InitInterpreter(final Interpreter interpreter) {
-        var left = new RobotInstruction(() -> boardProxy.move(Direction.LEFT), distance);
-        var up = new RobotInstruction(() -> boardProxy.move(Direction.UP), distance);
-        var right = new RobotInstruction(() -> boardProxy.move(Direction.RIGHT), distance);
-        var down = new RobotInstruction(() -> boardProxy.move(Direction.DOWN), distance);
-        interpreter.AddInstruction("robot.moveleft", left);
-        interpreter.AddInstruction("robot.moveup", up);
-        interpreter.AddInstruction("robot.moveright", right);
-        interpreter.AddInstruction("robot.movedown", down);
+        Stream.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
+                .map(it -> new RobotInstruction("robot.move" + it.name().toLowerCase(), () -> boardProxy.move(it), distance))
+                .forEach(it -> interpreter.AddInstruction(it.getName(), it));
     }
 
     @Override
