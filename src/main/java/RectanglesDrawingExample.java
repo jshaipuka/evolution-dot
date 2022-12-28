@@ -67,7 +67,7 @@ public class RectanglesDrawingExample extends JFrame {
         final Board board = new Board(75, 35);
         final Program program;
         try {
-            program = new Program("(exec.y (robot.moveup robot.moveleft))");
+            program = new Program(args[0]);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
