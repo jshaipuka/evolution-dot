@@ -1,7 +1,7 @@
 package items;
 
 public class Robot implements Item {
-    public static final int MAX_ENERGY = 50;
+    public static final int MAX_ENERGY = 100;
     private int energy;
 
     public Robot() {

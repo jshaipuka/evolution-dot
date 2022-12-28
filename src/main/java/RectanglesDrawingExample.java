@@ -40,18 +40,18 @@ public class RectanglesDrawingExample extends JFrame {
                     } else {
                         g.setColor(Color.GREEN);
                     }
-                    g.fillRect(j * 100, i * 100, 100, 100);
+                    g.fillRect(j * 10, i * 10, 10, 10);
                 }
             }
         }
 
         public Dimension getPreferredSize() {
-            return new Dimension(board.getWidth() * 100, board.getHeight() * 100);
+            return new Dimension(board.getWidth() * 10, board.getHeight() * 10);
         }
     }
 
     public static void main(String[] args) {
-        final Board board = new Board(15, 7);
+        final Board board = new Board(150, 70);
         final Program program;
         try {
             program = new Program("(exec.y (robot.moveup robot.moveleft))");
