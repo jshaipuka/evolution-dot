@@ -42,9 +42,7 @@ public class Board {
     }
 
     public void move(Direction direction) {
-//        System.out.println("Energy BEFORE: " + robot.getEnergy());
         if (robot.getEnergy() == 0) {
-//            System.out.println("Run out of energy");
             return;
         }
 
@@ -64,7 +62,6 @@ public class Board {
 
         System.out.println("Moving " + direction);
         System.out.println("Energy left: " + robot.getEnergy());
-        System.out.println(this);
     }
 
     public boolean isAlive() {

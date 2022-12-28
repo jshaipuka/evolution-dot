@@ -25,10 +25,5 @@ public class Robot implements Item {
         this.energy = Math.min(this.energy + amount, MAX_ENERGY);
         return this.energy;
     }
-
-    @Override
-    public String toString() {
-        return "📕";
-    }
 }
 

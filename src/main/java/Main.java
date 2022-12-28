@@ -17,7 +17,7 @@ public class Main {
         final ClassLoader classLoader = Main.class.getClassLoader();
         final URL resource = classLoader.getResource(fileName);
         if (resource == null) {
-            throw new IllegalArgumentException("file not found! " + fileName);
+            throw new IllegalArgumentException("File with name " + fileName + " was not found");
         } else {
             return new File(resource.toURI());
         }
