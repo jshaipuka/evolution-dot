@@ -50,6 +50,18 @@ public class RectanglesDrawingExample extends JFrame {
         }
     }
 
+    private static Runnable createCallback(final Board board, final Component component, final Direction direction) {
+        return () -> {
+            board.move(direction);
+            component.repaint();
+            try {
+                Thread.sleep(100);
+            } catch (final InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
     public static void main(String[] args) {
         final Board board = new Board(150, 70);
         final Program program;
@@ -65,22 +77,10 @@ public class RectanglesDrawingExample extends JFrame {
             final RectanglesDrawingExample panel = new RectanglesDrawingExample(board);
             final Thread thread = new Thread(() -> {
                 while (true) {
-                    var left = new RobotInstruction(() -> {
-                        board.move(Direction.LEFT);
-                        panel.repaint();
-                    }, distance);
-                    var up = new RobotInstruction(() -> {
-                        board.move(Direction.UP);
-                        panel.repaint();
-                    }, distance);
-                    var right = new RobotInstruction(() -> {
-                        board.move(Direction.RIGHT);
-                        panel.repaint();
-                    }, distance);
-                    var down = new RobotInstruction(() -> {
-                        board.move(Direction.DOWN);
-                        panel.repaint();
-                    }, distance);
+                    var left = new RobotInstruction(createCallback(board, panel, Direction.LEFT), distance);
+                    var up = new RobotInstruction(createCallback(board, panel, Direction.UP), distance);
+                    var right = new RobotInstruction(createCallback(board, panel, Direction.RIGHT), distance);
+                    var down = new RobotInstruction(createCallback(board, panel, Direction.DOWN), distance);
                     interpreter.AddInstruction("robot.moveleft", left);
                     interpreter.AddInstruction("robot.moveup", up);
                     interpreter.AddInstruction("robot.moveright", right);

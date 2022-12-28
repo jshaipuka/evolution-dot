@@ -18,10 +18,5 @@ public class RobotInstruction extends Instruction {
     public void Execute(Interpreter interpreter) {
         callback.run();
         counter.incrementAndGet();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
