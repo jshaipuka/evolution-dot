@@ -41,13 +41,13 @@ public class RectanglesDrawingExample extends JFrame {
                     } else {
                         g.setColor(Color.GREEN);
                     }
-                    g.fillRect(j * 10, i * 10, 10, 10);
+                    g.fillRect(j * 20, i * 20, 20, 20);
                 }
             }
         }
 
         public Dimension getPreferredSize() {
-            return new Dimension(board.getWidth() * 10, board.getHeight() * 10);
+            return new Dimension(board.getWidth() * 20, board.getHeight() * 20);
         }
     }
 
@@ -63,8 +63,8 @@ public class RectanglesDrawingExample extends JFrame {
         };
     }
 
-    public static void main(String[] args) {
-        final Board board = new Board(150, 70);
+    public static void main(final String[] args) {
+        final Board board = new Board(75, 35);
         final Program program;
         try {
             program = new Program("(exec.y (robot.moveup robot.moveleft))");
