@@ -59,9 +59,6 @@ public class Board {
         board[newLocation.x()][newLocation.y()] = robot;
 
         robotLocation = newLocation;
-
-        System.out.println("Moving " + direction);
-        System.out.println("Energy left: " + robot.getEnergy());
     }
 
     public boolean isAlive() {

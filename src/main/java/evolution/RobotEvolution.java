@@ -16,8 +16,8 @@ import java.util.stream.Stream;
 public class RobotEvolution extends PushGP {
 
     private static final int NUMBER_OF_BATTLES_PER_TEST = 5;
-    private static final int WIDTH = 15;
-    private static final int HEIGHT = 7;
+    private static final int WIDTH = 75;
+    private static final int HEIGHT = 35;
     public static final int INITIAL_ENERGY = 10;
 
     private final AtomicInteger distance = new AtomicInteger(0);
@@ -47,7 +47,7 @@ public class RobotEvolution extends PushGP {
         final PushGPIndividual robot = (PushGPIndividual) individual;
         final Program program;
         try {
-            program = new Program("(exec.dup (((((((exec.stackdepth exec.do*times (robot.movedown robot.moveleft robot.moveleft)) robot.moveup exec.rand) (robot.movedown exec.shove robot.movedown) robot.movedown ((((exec.stackdepth (robot.moveleft) (exec.yank (robot.moveright)) (exec.pop)) (exec.stackdepth robot.moveup robot.movedown) exec.yank) exec.rand (robot.movedown exec.shove robot.movedown)) exec.do*count exec.stackdepth)) (exec.y robot.movedown (exec.shove (exec.=)) (exec.pop)) exec.stackdepth) robot.moveleft robot.movedown) exec.do*times exec.do*times) (exec.pop robot.moveup exec.flush) robot.moveleft robot.movedown) (exec.stackdepth exec.y robot.movedown))");
+            program = new Program(robot._program);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
