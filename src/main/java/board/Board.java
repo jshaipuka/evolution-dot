@@ -6,11 +6,16 @@ import items.Item;
 import items.Robot;
 
 import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.lang.Math.floorMod;
 
 public class Board {
+
+    private static final int DELTA = 3;
+
     private final int height;
     private final int width;
 
@@ -27,6 +32,13 @@ public class Board {
 
         populateWithFood(board);
         placeRobot(board);
+    }
+
+    public Board(int width, int height, Item[][] board, Point robotLocation) {
+        this.width = width;
+        this.height = height;
+        this.board = board;
+        this.robotLocation = robotLocation;
     }
 
     private void populateWithFood(Item[][] board) {
@@ -77,6 +89,14 @@ public class Board {
         return board;
     }
 
+    public Set<Point> getNeighboursWithFood() {
+        return IntStream.rangeClosed(robotLocation.x() - DELTA, robotLocation.x() + DELTA)
+            .boxed()
+            .flatMap(i -> IntStream.rangeClosed(robotLocation.y() - DELTA, robotLocation.y() + DELTA).mapToObj(j -> new Point(i, j)))
+            .map(it -> calculateNextMove(robotLocation, it))
+            .filter(it -> board[it.x()][it.y()] instanceof Food)
+            .collect(Collectors.toUnmodifiableSet());
+    }
 
     private Point calculateNextMove(Point location, Direction direction) {
         return switch (direction) {
@@ -94,10 +114,10 @@ public class Board {
     @Override
     public String toString() {
         return Arrays
-                .stream(board)
-                .map(row -> Arrays.stream(row)
-                        .map(Object::toString)
-                        .collect(Collectors.joining("")))
-                .collect(Collectors.joining("\n"));
+            .stream(board)
+            .map(row -> Arrays.stream(row)
+                .map(Object::toString)
+                .collect(Collectors.joining("")))
+            .collect(Collectors.joining("\n"));
     }
 }
