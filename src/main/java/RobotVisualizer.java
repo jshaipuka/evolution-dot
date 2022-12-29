@@ -45,9 +45,8 @@ public class RobotVisualizer extends JFrame {
                 Stream.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
                     .map(it -> new RobotInstruction("robot.move" + it.name().toLowerCase(), createCallback(board, panel, it), distance))
                     .forEach(it -> interpreter.addInstruction(it.getName(), it));
-                while (true) {
-                    interpreter.execute(program);
-                }
+                interpreter.execute(program);
+                panel.repaint();
             });
             thread.start();
         });
