@@ -8,7 +8,7 @@ import static org.spiderland.Psh.GA.gaWithParameters;
 import static org.spiderland.Psh.Params.readFromFile;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         final GA ga = gaWithParameters(readFromFile(getFileFromResource("RobotEvolution.pushgp")));
         ga.run();
     }

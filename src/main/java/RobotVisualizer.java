@@ -10,10 +10,10 @@ import java.awt.EventQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public class RectanglesDrawingExample extends JFrame {
+public class RobotVisualizer extends JFrame {
 
-    public RectanglesDrawingExample(final Board board) {
-        final DrawPanel drawPanel = new DrawPanel(board);
+    public RobotVisualizer(final Board board) {
+        final var drawPanel = new DrawPanel(board);
         add(drawPanel);
         pack();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -34,13 +34,13 @@ public class RectanglesDrawingExample extends JFrame {
     }
 
     public static void main(final String[] args) {
-        final Board board = new Board(75, 35);
-        final Program program = new Program(args[0]);
-        final AtomicInteger distance = new AtomicInteger(0);
-        final Interpreter interpreter = new Interpreter();
+        final var board = new Board(75, 35);
+        final var program = new Program(args[0]);
+        final var distance = new AtomicInteger(0);
+        final var interpreter = new Interpreter();
         interpreter.setRandomParameters(-10, 10, 1, -10, 10, 0.01f, 40, 100);
         EventQueue.invokeLater(() -> {
-            final RectanglesDrawingExample panel = new RectanglesDrawingExample(board);
+            final var panel = new RobotVisualizer(board);
             final Thread thread = new Thread(() -> {
                 Stream.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
                     .map(it -> new RobotInstruction("robot.move" + it.name().toLowerCase(), createCallback(board, panel, it), distance))
